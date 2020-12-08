@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Compent, useState, useEffect} from 'react'
+import { ThemeConsumer } from 'styled-components'
+import Login from './Components/login'
+
+import  * as themas from './Components/Thema'
+import Context from './Components/Thema/context'
 
 function App() {
+const themas = ThemeConsumer.dark
+  const [state, setState] = useState(themas.dark)
+
+ useEffect(()=>{
+  setState(themas.dark? themas.light:themas.dark)
+ },[themas])
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Context.Provider value = {state}>
+      <Context.Consumer>
+          {theme =>{
+            <Login inputEntrada= {state} theme={state}/> 
+          }}
+                
+      </Context.Consumer>
+
+      
+      </Context.Provider>
     </div>
   );
 }

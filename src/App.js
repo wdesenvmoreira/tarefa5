@@ -1,34 +1,48 @@
-import React, { Compent, useState, useEffect} from 'react'
-import { ThemeConsumer } from 'styled-components'
+import React, { Component, useState, useEffect} from 'react'
+import { ThemeProvider } from 'styled-components'
+import { GlobalLayout } from  './Components/Thema/globalStyle'
+
+import { dark, light } from './Components/Thema/index'
 import Login from './Components/login'
 
-import  * as themas from './Components/Thema'
-import Context from './Components/Thema/context'
+
 
 function App() {
-const themas = ThemeConsumer.dark
-  const [state, setState] = useState(themas.dark)
+  const [isLogin, setLogin] = useState('');
+  const [thema, setThema] = useState(light);
 
- useEffect(()=>{
-  setState(themas.dark? themas.light:themas.dark)
- },[themas])
+    useEffect(()=>{
+        if(!isLogin){
+          setThema(dark)
+        }else{
+          setThema(light)
+        }
+      },[isLogin])
+    
+    
+    function sign(event){
+              setLogin(!isLogin);
+               event.preventDefault();
+               
+          }
 
 
 
   return (
     <div className="App">
-      <Context.Provider value = {state}>
-      <Context.Consumer>
-          {theme =>{
-            <Login inputEntrada= {state} theme={state}/> 
-          }}
-                
-      </Context.Consumer>
+      <ThemeProvider theme={ thema }>
+        <GlobalLayout/>
 
-      
-      </Context.Provider>
+            <div className='grid-container'>
+              <div className='grid-item'>
+                <Login inputEntrada click={sign}/> 
+              </div>
+            </div>
+
+
+      </ThemeProvider>
     </div>
-  );
+  )
 }
 
 export default App;

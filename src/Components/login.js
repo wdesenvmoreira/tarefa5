@@ -1,20 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-
-const inputEntrada = styled.input`
-    background:#333;
-    color: #FFF;
-    font-family: sans-serif;
-    font-size: 18px;
-
-`
+import { useState, useEffect} from 'react'
 
 
-function Login ({ thema }){
+
+
+function Login (props){
+  
 
     return (
         <div>
-            <input type='text' /><button onclick={inputEntrada} thema={()=>{console.log(thema)}}>Entrar</button>
+            <h3>Sign up to my newsletter</h3>
+            <input className='input-text' type='text' value='my@email.com' /><button className='button-click' onClick={props.click}>Sign up</button>
         </div>
     )
 }
